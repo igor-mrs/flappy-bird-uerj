@@ -25,7 +25,8 @@ Se alguém atrasar durante a oficina presencial, basta rodar `git checkout <bran
 | **04** | `04-mundo-obstaculos` | `Ground` em loop (`AnimationPlayer`), `PipePair` (`Area2D` letal + `ScoreArea` separado) e `ObstacleSpawner` com `Timer`. | `git diff 03-jogador..04-mundo-obstaculos` |
 | **05** | `05-ui-recorde` | `HUD` (`StartMenu`, placar ao vivo e `Game Over`), máquina de estados da partida, reinício e recorde salvo em `user://highscore.save`. | `git diff 04-mundo-obstaculos..05-ui-recorde` |
 | **06** | `06-polimento-final` | Três efeitos sonoros com `AudioStreamPlayer` (pulo, ponto e morte) + preset de exportação **Windows Desktop**. | `git diff 05-ui-recorde..06-polimento-final` |
-| **Final** | `main` | Jogo finalizado (idêntico à `06-polimento-final`). | — |
+| **07** | `07-extras-hall-transicao` | **Contribuição autoral:** plugin **EasyTransition** (`CIRCLE_CENTER_COLLAPSE` com dithering + `swoosh.wav`) e **Hall da Fama Top 5** em JSON (`user://hall_of_fame.json`). | `git diff 06-polimento-final..07-extras-hall-transicao` |
+| **Final** | `main` | Jogo finalizado com os extras (idêntico à `07-extras-hall-transicao`). | — |
 
 ---
 

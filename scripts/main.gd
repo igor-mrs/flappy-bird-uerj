@@ -13,6 +13,7 @@ enum GameState { WAITING, PLAYING, GAME_OVER }
 @onready var flap_sound: AudioStreamPlayer = $FlapSound
 @onready var point_sound: AudioStreamPlayer = $PointSound
 @onready var hit_sound: AudioStreamPlayer = $HitSound
+@onready var swoosh_sound: AudioStreamPlayer = $SwooshSound
 
 var state: GameState = GameState.WAITING
 var score: int = 0
@@ -28,6 +29,8 @@ func _ready() -> void:
 	obstacle_spawner.pipe_hit.connect(_on_player_crashed)
 	obstacle_spawner.point_scored.connect(_on_point_scored)
 	hud.restart_requested.connect(_on_restart_requested)
+	hud.hall_of_fame_requested.connect(_on_hall_of_fame_requested)
+	hud.save_record_requested.connect(_on_save_record_requested)
 
 
 func _on_game_started() -> void:
@@ -66,11 +69,36 @@ func _on_player_crashed() -> void:
 		high_score = score
 		save_high_score()
 
-	hud.show_game_over(score, high_score)
+	hud.show_game_over(score, high_score, HallOfFame.qualifies(score))
+
+
+func _on_save_record_requested(player_name: String) -> void:
+	var rank: int = HallOfFame.add_entry(player_name, score)
+	hud.mark_record_saved(rank)
 
 
 func _on_restart_requested() -> void:
-	get_tree().reload_current_scene()
+	_transition_with_swoosh("res://scenes/main.tscn")
+
+
+func _on_hall_of_fame_requested() -> void:
+	_transition_with_swoosh("res://scenes/hall_of_fame.tscn")
+
+
+func _transition_with_swoosh(scene_path: String) -> void:
+	if EasyTransition.is_transitioning:
+		return
+	swoosh_sound.play()
+	EasyTransition.transition_to(
+		scene_path,
+		0.6,
+		EasyTransition.TransitionAnim.CIRCLE_CENTER_COLLAPSE,
+		HallOfFame.TRANSITION_COLOR,
+		null,
+		true,
+		0.5,
+		3.0
+	)
 
 
 func save_high_score() -> void:
@@ -80,10 +108,13 @@ func save_high_score() -> void:
 
 
 func load_high_score() -> void:
+	var hall_best: int = HallOfFame.get_best_score()
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
-		high_score = 0
+		high_score = hall_best
 		return
 
 	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 	if file:
-		high_score = file.get_32()
+		high_score = maxi(file.get_32(), hall_best)
+	else:
+		high_score = hall_best

@@ -25,7 +25,11 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if is_alive and Input.is_action_just_pressed("flap"):
+	if EasyTransition.is_transitioning:
+		return
+
+	var hovering_button := get_viewport().gui_get_hovered_control() is Button
+	if is_alive and not hovering_button and Input.is_action_just_pressed("flap"):
 		if not is_started:
 			start()
 		flap()

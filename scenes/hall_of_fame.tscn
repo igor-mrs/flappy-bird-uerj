@@ -1,0 +1,173 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/hall_of_fame.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/background.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/ground.tscn" id="3_ground"]
+[ext_resource type="FontFile" path="res://assets/fonts/flappyfont.TTF" id="4_font"]
+[ext_resource type="AudioStream" path="res://assets/audio/swoosh.wav" id="5_swoosh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("4_font")
+font_size = 34
+font_color = Color(1, 0.843137, 0, 1)
+outline_size = 6
+outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_empty"]
+font = ExtResource("4_font")
+font_size = 20
+font_color = Color(0.909804, 0.415686, 0.090196, 1)
+outline_size = 4
+outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+bg_color = Color(0.870588, 0.847059, 0.584314, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.909804, 0.415686, 0.090196, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.960784, 0.498039, 0.160784, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.788235, 0.337255, 0.0470588, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clear_normal"]
+bg_color = Color(0.45098, 0.74902, 0.180392, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="HallOfFame" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Ground" parent="." instance=ExtResource("3_ground")]
+position = Vector2(0, 686)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TitleLabel" type="Label" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 72.0
+offset_bottom = 132.0
+grow_horizontal = 2
+text = "HALL DA FAMA"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="BoardPanel" type="PanelContainer" parent="UI"]
+offset_left = 56.0
+offset_top = 156.0
+offset_right = 424.0
+offset_bottom = 486.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Content" type="VBoxContainer" parent="UI/BoardPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="UI/BoardPanel/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "NENHUM RECORDE AINDA!"
+label_settings = SubResource("LabelSettings_empty")
+horizontal_alignment = 1
+
+[node name="EntriesList" type="VBoxContainer" parent="UI/BoardPanel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BackButton" type="Button" parent="UI"]
+unique_name_in_owner = true
+offset_left = 100.0
+offset_top = 516.0
+offset_right = 380.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "VOLTAR"
+
+[node name="ClearButton" type="Button" parent="UI"]
+unique_name_in_owner = true
+offset_left = 140.0
+offset_top = 594.0
+offset_right = 340.0
+offset_bottom = 640.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_clear_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "LIMPAR TOP 5"
+
+[node name="SwooshSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_swoosh")
