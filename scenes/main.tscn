@@ -1,13 +1,22 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/textures/background.png" id="1_bg"]
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://assets/textures/background.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/obstacle_spawner.tscn" id="3_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/ground.tscn" id="4_ground"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="5_player"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_main")
 
 [node name="Background" type="Sprite2D" parent="."]
-texture = ExtResource("1_bg")
+texture = ExtResource("2_bg")
 centered = false
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
+[node name="ObstacleSpawner" parent="." instance=ExtResource("3_spawner")]
+
+[node name="Ground" parent="." instance=ExtResource("4_ground")]
+position = Vector2(0, 686)
+
+[node name="Player" parent="." instance=ExtResource("5_player")]
 position = Vector2(120, 415)
