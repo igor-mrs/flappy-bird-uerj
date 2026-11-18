@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Texture2D" path="res://assets/textures/background.png" id="2_bg"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" path="res://scenes/ground.tscn" id="4_ground"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="5_player"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="6_hud"]
+[ext_resource type="AudioStream" path="res://assets/audio/wing.wav" id="7_wing"]
+[ext_resource type="AudioStream" path="res://assets/audio/point.wav" id="8_point"]
+[ext_resource type="AudioStream" path="res://assets/audio/hit.wav" id="9_hit"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -23,3 +26,12 @@ position = Vector2(0, 686)
 position = Vector2(120, 415)
 
 [node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="FlapSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wing")
+
+[node name="PointSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_point")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_hit")

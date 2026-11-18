@@ -10,6 +10,10 @@ enum GameState { WAITING, PLAYING, GAME_OVER }
 @onready var player: Player = $Player
 @onready var hud: HUD = $HUD
 
+@onready var flap_sound: AudioStreamPlayer = $FlapSound
+@onready var point_sound: AudioStreamPlayer = $PointSound
+@onready var hit_sound: AudioStreamPlayer = $HitSound
+
 var state: GameState = GameState.WAITING
 var score: int = 0
 var high_score: int = 0
@@ -19,6 +23,7 @@ func _ready() -> void:
 	load_high_score()
 
 	player.game_started.connect(_on_game_started)
+	player.flapped.connect(_on_player_flapped)
 	ground.player_crashed.connect(_on_player_crashed)
 	obstacle_spawner.pipe_hit.connect(_on_player_crashed)
 	obstacle_spawner.point_scored.connect(_on_point_scored)
@@ -31,12 +36,17 @@ func _on_game_started() -> void:
 	obstacle_spawner.start()
 
 
+func _on_player_flapped() -> void:
+	flap_sound.play()
+
+
 func _on_point_scored() -> void:
-	# Garante que nunca haja pontuação depois da morte
+	# Garante que nunca haja pontuação nem som de ponto depois da morte
 	if state != GameState.PLAYING:
 		return
 
 	score += 1
+	point_sound.play()
 	hud.update_score(score)
 
 
@@ -45,6 +55,9 @@ func _on_player_crashed() -> void:
 		return
 
 	state = GameState.GAME_OVER
+	# Toca o som de morte apenas uma vez, no encerramento da partida
+	hit_sound.play()
+
 	player.die()
 	ground.stop()
 	obstacle_spawner.stop()
