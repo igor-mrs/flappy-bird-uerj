@@ -1,44 +1,71 @@
 # Flappy Bird — Oficina Godot 4 (GameLab UERJ)
 
-Projeto desenvolvido para o minicurso **"Um clone funcional do famoso Flappy Bird"** na **XII Semana de Engenharia UERJ** (Igor Morais do Amaral · GameLab UERJ), baseado no tutorial de Kaan Alpar para Godot 4.6+.
+Clone funcional completo do clássico **Flappy Bird**, construído passo a passo para a oficina presencial na **XII Semana de Engenharia UERJ** (**Igor Morais do Amaral · GameLab UERJ**), seguindo o tutorial de Kaan Alpar (*"Let's Create Flappy Bird in Godot 4.6!"*).
 
 ---
 
-## Como começar (Projeto Base)
+## Requisitos
 
-1. Baixe ou clone este repositório.
-2. Abra o **Godot 4.6+** (ou **Godot 4.7**), clique em **Import** e selecione o arquivo `project.godot`.
-3. Se você está acompanhando a aula do zero, mude para a branch inicial:
-   ```bash
-   git checkout 00-projeto-base
-   ```
+- **Godot Engine 4.6 ou 4.7** ([godotengine.org/download](https://godotengine.org/download))
+- Nenhuma dependência externa — todos os sprites, fontes e efeitos sonoros já estão em `res://assets/`.
 
 ---
 
-## Mapa de Branches da Aula
+## Roteiro da Aula & Branches Git
 
-Se você perder algum passo durante a oficina presencial, basta alternar para a branch correspondente ao módulo atual do roteiro:
+O repositório foi estruturado de forma **linear e cumulativa**: cada branch representa o estado exato do projeto ao final daquele módulo da aula.
 
-| Branch | Etapa da Aula | O que está pronto nesta branch |
-| :--- | :--- | :--- |
-| `00-projeto-base` | **01. Projeto Base** | Pastas `scenes/`, `scripts/` e `assets/` (sprites, sons e fonte) prontas para começar. |
-| `02-configuracao` | **02. Configuração e Preparação** | Janela vertical (`480x854` com override `720x1280`), pixel art nítida (`Nearest`), ação `flap` no Input Map e `Background`. |
-| `03-jogador` | **03. O Jogador: Física e Controle** | Cena `Player` (`RigidBody2D`), gravidade controlada, impulso de pulo (`flap`), animação de bater asas e rotação conforme velocidade vertical. |
-| `04-mundo-obstaculos` | **04. Mundo e Obstáculos** | Solo com rolagem em loop (`AnimationPlayer`), par de canos (`Area2D` letal + `ScoreArea` separado) e `ObstacleSpawner` com `Timer`. |
-| `05-ui-recorde` | **05. Sistemas de Jogo e Interface** | `HUD` (`StartMenu`, placar ao vivo e tela de `Game Over`), estados da partida, reinício e recorde persistido em `user://highscore.save`. |
-| `06-polimento-final` | **06. Polimento e Exportação** | Efeitos sonoros com `AudioStreamPlayer` (pulo, ponto e morte) e preset de exportação Windows Desktop. |
-| `main` | **Versão Completa** | Jogo finalizado com todos os sistemas, áudio e documentação. |
+Se alguém atrasar durante a oficina presencial, basta rodar `git checkout <branch>` para alcançar a turma imediatamente — ou usar `git diff` para revisar exatamente o que mudou de uma etapa para a outra!
+
+| Módulo | Branch | Conteúdo Construído | Comparar Mudanças |
+| :---: | :--- | :--- | :--- |
+| **01** | `00-projeto-base` | Estrutura inicial (`scenes/`, `scripts/`, `assets/`) pronta para começar do zero. | — |
+| **02** | `02-configuracao` | Viewport `480×854` (janela `720×1280` com `canvas_items`), filtro `Nearest`, ação `flap` no Input Map e `Background`. | `git diff 00-projeto-base..02-configuracao` |
+| **03** | `03-jogador` | Cena `Player` (`RigidBody2D`), `gravity_scale` desligada no início, impulso no clique (`flap`), animação e inclinação do sprite. | `git diff 02-configuracao..03-jogador` |
+| **04** | `04-mundo-obstaculos` | `Ground` em loop (`AnimationPlayer`), `PipePair` (`Area2D` letal + `ScoreArea` separado) e `ObstacleSpawner` com `Timer`. | `git diff 03-jogador..04-mundo-obstaculos` |
+| **05** | `05-ui-recorde` | `HUD` (`StartMenu`, placar ao vivo e `Game Over`), máquina de estados da partida, reinício e recorde salvo em `user://highscore.save`. | `git diff 04-mundo-obstaculos..05-ui-recorde` |
+| **06** | `06-polimento-final` | Três efeitos sonoros com `AudioStreamPlayer` (pulo, ponto e morte) + preset de exportação **Windows Desktop**. | `git diff 05-ui-recorde..06-polimento-final` |
+| **Final** | `main` | Jogo finalizado (idêntico à `06-polimento-final`). | — |
 
 ---
 
-## Estrutura de Pastas
+## Arquitetura de Cenas e Scripts
 
 ```text
 res://
-├── assets/
-│   ├── audio/      # Efeitos sonoros (.wav)
-│   ├── fonts/      # Fonte pixelada (flappyfont.TTF)
-│   └── textures/   # Sprites do pássaro, canos, cenário, solo e UI (.png)
-├── scenes/         # Cenas do Godot (.tscn)
-└── scripts/        # Códigos GDScript (.gd)
+├── project.godot                # Viewport 480x854 (janela 720x1280), filtro Nearest, input "flap"
+├── export_presets.cfg           # Preset Windows Desktop (x86_64, .pck embutido)
+├── scenes/
+│   ├── main.tscn                # Mundo principal (Background, Spawner, Ground, Player, HUD e Sons)
+│   ├── player.tscn              # RigidBody2D + Sprite2D (3 frames) + CircleShape2D + AnimationPlayer
+│   ├── ground.tscn              # StaticBody2D + 2x Sprite2D + DeathZone (Area2D) + AnimationPlayer
+│   ├── pipe_pair.tscn           # TopPipe (Area2D) + BottomPipe (Area2D) + ScoreArea (Area2D)
+│   ├── obstacle_spawner.tscn    # Node2D + SpawnTimer (1.7s)
+│   └── hud.tscn                 # CanvasLayer (ScoreLabel, StartMenu e GameOverMenu)
+├── scripts/
+│   ├── main.gd                  # Estados (WAITING, PLAYING, GAME_OVER), áudio e FileAccess do recorde
+│   ├── player.gd                # Gravidade, impulso vertical, limite de tela e rotação do sprite
+│   ├── ground.gd                # Detecção de queda no solo e pausa da rolagem
+│   ├── pipe_pair.gd             # Movimento para a esquerda, remoção fora da tela e sinais
+│   ├── obstacle_spawner.gd      # Instanciação periódica com altura Y sorteada
+│   └── hud.gd                   # Atualização visual do placar e telas de início / fim de partida
+└── assets/
+    ├── audio/                   # wing.wav, point.wav, hit.wav, die.wav, swoosh.wav
+    ├── fonts/                   # flappyfont.TTF
+    └── textures/                # background.png, bird.png, ground.png, pipe.png, message.png, gameover.png
 ```
+
+---
+
+## Exportando para Windows (Módulo 06)
+
+1. No editor do Godot, acesse **Editor → Manage Export Templates...** e clique em **Download and Install** para instalar os templates da sua versão (4.6 / 4.7).
+2. Acesse **Project → Export...** — o preset **Windows Desktop** já está configurado (`builds/windows/FlappyBird.exe` com `Embed PCK` ativado).
+3. Crie a pasta `builds/windows/` (se necessário) e clique em **Export Project...**.
+4. **Checklist antes de compartilhar:**
+   - [ ] Pulo responde uma vez por clique e toca `wing.wav`
+   - [ ] Passagem pela abertura soma `+1` ponto e toca `point.wav`
+   - [ ] Colisão nos canos ou no solo encerra a partida, toca `hit.wav` uma única vez e congela o cenário
+   - [ ] Nenhuma pontuação extra ocorre após a morte
+   - [ ] Botão **RESTART** reinicia a cena na tela inicial
+   - [ ] Recorde (**BEST**) permanece salvo mesmo após fechar e reabrir o `.exe`
