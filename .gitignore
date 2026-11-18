@@ -1,0 +1,14 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Exported builds
+builds/
+export/
+*.exe
+*.pck
+*.dmg
+*.apk
+
+# macOS / OS files
+.DS_Store
+Thumbs.db
