@@ -1,0 +1,189 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://assets/fonts/flappyfont.TTF" id="2_font"]
+[ext_resource type="Texture2D" path="res://assets/textures/message.png" id="3_message"]
+[ext_resource type="Texture2D" path="res://assets/textures/gameover.png" id="4_gameover"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hud_score"]
+font = ExtResource("2_font")
+font_size = 52
+outline_size = 8
+outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.870588, 0.847059, 0.584314, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_card_title"]
+font = ExtResource("2_font")
+font_size = 24
+font_color = Color(0.909804, 0.415686, 0.090196, 1)
+outline_size = 4
+outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_card_value"]
+font = ExtResource("2_font")
+font_size = 28
+outline_size = 5
+outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.909804, 0.415686, 0.090196, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.960784, 0.498039, 0.160784, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.788235, 0.337255, 0.0470588, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.329412, 0.219608, 0.278431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_script")
+
+[node name="ScoreLabel" type="Label" parent="."]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 48.0
+offset_bottom = 120.0
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_hud_score")
+horizontal_alignment = 1
+
+[node name="StartMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MessageTexture" type="TextureRect" parent="StartMenu"]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 140.0
+offset_right = 378.0
+offset_bottom = 540.0
+mouse_filter = 2
+texture = ExtResource("3_message")
+
+[node name="GameOverMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverTexture" type="TextureRect" parent="GameOverMenu"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 180.0
+offset_right = 384.0
+offset_bottom = 243.0
+texture = ExtResource("4_gameover")
+
+[node name="ScorePanel" type="PanelContainer" parent="GameOverMenu"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 275.0
+offset_right = 400.0
+offset_bottom = 445.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu/ScorePanel"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="ScoreRow" type="HBoxContainer" parent="GameOverMenu/ScorePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreTitle" type="Label" parent="GameOverMenu/ScorePanel/VBoxContainer/ScoreRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SCORE"
+label_settings = SubResource("LabelSettings_card_title")
+
+[node name="FinalScoreValue" type="Label" parent="GameOverMenu/ScorePanel/VBoxContainer/ScoreRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_card_value")
+
+[node name="BestRow" type="HBoxContainer" parent="GameOverMenu/ScorePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="BestTitle" type="Label" parent="GameOverMenu/ScorePanel/VBoxContainer/BestRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BEST"
+label_settings = SubResource("LabelSettings_card_title")
+
+[node name="BestScoreValue" type="Label" parent="GameOverMenu/ScorePanel/VBoxContainer/BestRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_card_value")
+
+[node name="RestartButton" type="Button" parent="GameOverMenu"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 140.0
+offset_top = 475.0
+offset_right = 340.0
+offset_bottom = 535.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.329412, 0.219608, 0.278431, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "RESTART"
