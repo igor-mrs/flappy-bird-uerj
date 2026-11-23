@@ -1,4 +1,4 @@
-# Flappy Bird — Oficina Godot 4 (GameLab UERJ)
+# Flappy Bird - Oficina Godot 4 (GameLab UERJ)
 
 Clone funcional completo do clássico **Flappy Bird**, construído passo a passo para a oficina presencial na **XII Semana de Engenharia UERJ** (**Igor Morais do Amaral · GameLab UERJ**), seguindo o tutorial de Kaan Alpar (*"Let's Create Flappy Bird in Godot 4.6!"*).
 
@@ -6,8 +6,8 @@ Clone funcional completo do clássico **Flappy Bird**, construído passo a passo
 
 ## Requisitos
 
-- **Godot Engine 4.6 ou 4.7** ([godotengine.org/download](https://godotengine.org/download))
-- Nenhuma dependência externa — todos os sprites, fontes e efeitos sonoros já estão em `res://assets/`.
+- **Godot Engine 4.7** ([godotengine.org/download](https://godotengine.org/download))
+- Nenhuma dependência externa. Todos os sprites, fontes e efeitos sonoros já estão em `res://assets/`.
 
 ---
 
@@ -15,7 +15,7 @@ Clone funcional completo do clássico **Flappy Bird**, construído passo a passo
 
 O repositório foi estruturado de forma **linear e cumulativa**: cada branch representa o estado exato do projeto ao final daquele módulo da aula.
 
-Se alguém atrasar durante a oficina presencial, basta rodar `git checkout <branch>` para alcançar a turma imediatamente — ou usar `git diff` para revisar exatamente o que mudou de uma etapa para a outra!
+Se alguém se atrasar durante a oficina, basta rodar `git checkout <branch>` para alcançar a turma imediatamente — ou usar `git diff` para revisar exatamente o que mudou de uma etapa para a outra!
 
 | Módulo | Branch | Conteúdo Construído | Comparar Mudanças |
 | :---: | :--- | :--- | :--- |
@@ -60,13 +60,6 @@ res://
 
 ## Exportando para Windows (Módulo 06)
 
-1. No editor do Godot, acesse **Editor → Manage Export Templates...** e clique em **Download and Install** para instalar os templates da sua versão (4.6 / 4.7).
+1. No editor do Godot, acesse **Editor → Manage Export Templates...** e clique em **Download and Install** para instalar os templates da sua versão (4.7).
 2. Acesse **Project → Export...** — o preset **Windows Desktop** já está configurado (`builds/windows/FlappyBird.exe` com `Embed PCK` ativado).
-3. Crie a pasta `builds/windows/` (se necessário) e clique em **Export Project...**.
-4. **Checklist antes de compartilhar:**
-   - [ ] Pulo responde uma vez por clique e toca `wing.wav`
-   - [ ] Passagem pela abertura soma `+1` ponto e toca `point.wav`
-   - [ ] Colisão nos canos ou no solo encerra a partida, toca `hit.wav` uma única vez e congela o cenário
-   - [ ] Nenhuma pontuação extra ocorre após a morte
-   - [ ] Botão **RESTART** reinicia a cena na tela inicial
-   - [ ] Recorde (**BEST**) permanece salvo mesmo após fechar e reabrir o `.exe`
+3. Clique em **Export Project...**.
