@@ -1,6 +1,6 @@
 # Flappy Bird - Oficina Godot 4 (GameLab UERJ)
 
-Clone funcional completo do clássico **Flappy Bird**, construído passo a passo para a oficina presencial na **XII Semana de Engenharia UERJ** (**Igor Morais do Amaral · GameLab UERJ**), seguindo o tutorial de Kaan Alpar (*"Let's Create Flappy Bird in Godot 4.6!"*).
+Clone funcional completo do clássico **Flappy Bird**, construído passo a passo para a oficina presencial na **XII Semana de Engenharia UERJ** (**Igor Amaral · GameLab UERJ**), seguindo o tutorial de Kaan Alpar (*"Let's Create Flappy Bird in Godot 4.6!"*).
 
 ---
 
