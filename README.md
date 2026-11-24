@@ -7,11 +7,7 @@ Projeto desenvolvido para o minicurso **"Um clone funcional do famoso Flappy Bir
 ## Como começar (Projeto Base)
 
 1. Baixe ou clone este repositório.
-2. Abra o **Godot 4.6+** (ou **Godot 4.7**), clique em **Import** e selecione o arquivo `project.godot`.
-3. Se você está acompanhando a aula do zero, mude para a branch inicial:
-   ```bash
-   git checkout 00-projeto-base
-   ```
+2. Abra o **Godot 4.7**, clique em **Import** e selecione o arquivo `project.godot`.
 
 ---
 
